@@ -7,6 +7,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum CuisineType {
+  AMERICAN
+  CHINESE
+  INDIAN
+  ITALIAN
+  JAPANESE
+  MEXICAN
+  THAI
+  VIETNAMESE
+  FRENCH
+  GREEK
+  MEDITERRANEAN
+  KOREAN
+  ETHIOPIAN
+  LEBANESE
+  SPANISH
+}
+
 model User {
   id String @id @default(uuid())
 
@@ -18,4 +36,34 @@ model User {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("users")
+}
+
+model Recipe {
+  id String @id @default(ulid())
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  name        String
+  cuisineType CuisineType
+  isFavorite  Favorite?
+  rating      Int
+  image       String?
+
+  ingredients String[]
+  favoriteId  String?
+
+  @@map("recipes")
+}
+
+model Favorite {
+  id String @id @default(ulid())
+
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  recipeName String   @map("recipe_name")
+  recipeId   String   @unique
+  recipe     Recipe   @relation(fields: [recipeId], references: [id])
+
+  @@map("favorites")
 }

@@ -1,12 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { PassportStrategy } from "@nestjs/passport"
-import { ExtractJwt, Strategy } from "passport-jwt"
 import { AuthService } from "../auth.service"
 import { ConfigService } from "@nestjs/config"
 import { Injectable } from "@nestjs/common"
 import { JwtPayload } from "../interfaces/jwt.interface"
+import { ExtractJwt, Strategy } from "passport-jwt"
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
